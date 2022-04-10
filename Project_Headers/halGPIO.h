@@ -9,6 +9,8 @@ extern enum FSMstate state;   // global variable
 extern enum SYSmode lpm_mode; // global variable
 
 extern void sysConfig(void);
+extern void toggleOP(char pin);
+extern void setOP(char pin);
 extern void print2LEDs(unsigned char);
 extern void clrLEDs(void);
 extern void toggleLEDs(char);

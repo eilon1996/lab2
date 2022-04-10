@@ -21,12 +21,12 @@ void GPIOconfig(void){
 	LEDsArrPortDir |= LEDsArr_LOC;  //Setup PB.0-PB.3 and PB.8-PB.11 as GPIO output
 	
 	// Switches SW3-SW0 Setup
-	PORTD_PCR4 = SWsArrPortSel; // PTD.4=SW0
-	PORTD_PCR5 = SWsArrPortSel; // PTD.5=SW1
-	PORTD_PCR6 = SWsArrPortSel; // PTD.6=SW2
+	//PORTD_PCR4 = SWsArrPortSel; // PTD.4=SW0
+	//PORTD_PCR5 = SWsArrPortSel; // PTD.5=SW1
+	//PORTD_PCR6 = SWsArrPortSel; // PTD.6=SW2
 	PORTD_PCR7 = SWsArrPortSel; // PTD.7=SW3
 	
-	SWsArrPortDir &= ~SWsArr_LOC; 
+	SWsArrPortDir |= PORT_LOC(7); // Defining PTD.7 dir to be output 
 	
 	// PushButtons Setup
 	PORTD_PCR0 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_UP); 	// PTD.0=PB0 + Interrupt request enable

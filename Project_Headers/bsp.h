@@ -46,6 +46,16 @@
 #define SWsArrReadShift 4
 #define SWsArrVal       (SWsArrPort >> SWsArrReadShift) & SWsArr_LOC
 
+
+//-----------------------------------------------------------------------
+//                    OutputSignals abstraction
+//-----------------------------------------------------------------------
+#define OutputSignalPort            GPIOD_PDIR
+#define OSignalPortDir              GPIOD_PDDR
+#define OSignalPortSel              PORT_PCR_MUX(1)+ PORT_PCR_IRQC(0x00)
+
+#define OP7_LOC                     PORT_LOC(7)
+
 //------------------------------------------------------------------------
 //					 PushButtons abstraction
 //-------------------------------------------------------------------------
