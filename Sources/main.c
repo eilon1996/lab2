@@ -33,10 +33,12 @@ void main(void){
 		break;
 
 	  case state3:
-		
-		print2LEDs(0x55);
-		delay(LEDs_SHOW_RATE);		// delay of 62.5 [ms]
-	
+		while(1){
+			print2LEDs(0x01);
+			delay(LEDs_SHOW_RATE);		// delay of 62.5 [ms]
+			print2LEDs(0x00);
+			delay(LEDs_SHOW_RATE/3);
+		}
 		break;
 
 	}
