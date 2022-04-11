@@ -4,39 +4,47 @@
 enum FSMstate state;
 enum SYSmode lpm_mode;
 
+char id[9] = {2,0,6,9,0,3,4,4,5};
+
 void main(void){
-  
+
   state = state0;  // start in idle state on RESET
   lpm_mode = mode0;     // start in idle state on RESET
   sysConfig();
-  
+
   while(1){
 	switch(state){
 	  case state0:
 		printSWs2LEDs();
         enterLPM(lpm_mode);
 		break;
-		 
+
+
 	  case state1:
 		disable_interrupts();
-		incLEDs(1);
-		delay(LEDs_SHOW_RATE);	// delay of 62.5 [ms]
+		printArr2SWs(id, 9, HALF_SEC_DELAY);
 		enable_interrupts();
 		break;
-		 
+
 	  case state2:
 		disable_interrupts();
-		incLEDs(-1);
+		printLedsOneByOne(14, HALF_SEC_DELAY);
+		enable_interrupts();
+		break;
+
+	  case state3:
+		disable_interrupts();
+		print2LEDs(0x55);
 		delay(LEDs_SHOW_RATE);		// delay of 62.5 [ms]
 		enable_interrupts();
 		break;
-		
+
 	}
   }
 }
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+

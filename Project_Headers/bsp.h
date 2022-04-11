@@ -7,6 +7,7 @@
 
 #define   debounceVal      250
 #define   LEDs_SHOW_RATE   0xFFFFF  // 21_8ms
+#define   HALF_SEC_DELAY   0x1FFFF8  //
 #define   PORT_LOC(x)        ((uint32_t)(1<<x))
 //------------------------------------------------------------------
 //  					LEDs abstraction
@@ -26,7 +27,7 @@
 #define LEDsArrPortSet(x)		GPIOC_PSOR = x & LEDsArr_LOC
 #define LEDsArrPortClear(x)	    GPIOC_PCOR = x & LEDsArr_LOC
 #define LEDsArrPortToggle(x)	GPIOC_PTOR = x & LEDsArr_LOC
-#define LEDsArrPortWrite(x)	    LEDsArrPort = x & LEDsArr_LOC 
+#define LEDsArrPortWrite(x)	    LEDsArrPort = x & LEDsArr_LOC
 // #define LEDsArrPortWrite(x)	    GPIOC_PDOR = LEDsArrPortSet(x),GPIOC_PDOR = LEDsArrPortSet(~x)
 
 #define LEDsArrPortDir     		GPIOC_PDDR
@@ -46,25 +47,35 @@
 #define SWsArrReadShift 4
 #define SWsArrVal       (SWsArrPort >> SWsArrReadShift) & SWsArr_LOC
 
+
+//-----------------------------------------------------------------------
+//                    OutputSignals abstraction
+//-----------------------------------------------------------------------
+#define OutputSignalPort            GPIOD_PDIR
+#define OSignalPortDir              GPIOD_PDDR
+#define OSignalPortSel              PORT_PCR_MUX(1)+ PORT_PCR_IRQC(0x00)
+
+#define OP7_LOC                     PORT_LOC(7)
+
 //------------------------------------------------------------------------
 //					 PushButtons abstraction
 //-------------------------------------------------------------------------
 #define PB0_LOC		PORT_LOC(0)
-#define PB1_LOC		PORT_LOC(1)	
+#define PB1_LOC		PORT_LOC(1)
 #define PB2_LOC		PORT_LOC(2)
 #define PB3_LOC		PORT_LOC(3)
 #define PBsArr_LOC  PB0_LOC|PB1_LOC|PB2_LOC|PB3_LOC
 
 
-#define PBsArrPort	       		GPIOD_PDOR 
-#define PBsArrIntPend	    	PORTD_ISFR   
-#define PBsArrIntPendClear(x)	PORTD_ISFR |= x  // using clear with PBi_LOC 
-// #define PBsArrIntEn	       		
+#define PBsArrPort	       		GPIOD_PDOR
+#define PBsArrIntPend	    	PORTD_ISFR
+#define PBsArrIntPendClear(x)	PORTD_ISFR |= x  // using clear with PBi_LOC
+// #define PBsArrIntEn
 #define PBsArrIntEdgeSel(x) 	PORT_PCR_IRQC(x)
 #define PULL_UP            		0x0a
 #define PULL_DOWN           	0x09
-#define PBsArrPortSel      		PORT_PCR_MUX(1)| PORT_PCR_PFE_MASK 
-#define PBsArrPortDir      		GPIOD_PDDR 
+#define PBsArrPortSel      		PORT_PCR_MUX(1)| PORT_PCR_PFE_MASK
+#define PBsArrPortDir      		GPIOD_PDDR
 //---------------------------------------------------------------------------
 
 extern void GPIOconfig(void);
