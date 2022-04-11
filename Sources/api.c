@@ -14,26 +14,35 @@ void printSWs2LEDs(void){
 //--------------------------------------------------------------------
 //            Print array to LEDs array with rate of LEDs_SHOW_RATE
 //--------------------------------------------------------------------
-void printArr2SWs(char Arr[], int size, unsigned int rate){
+void printArr2SWs(char Arr[], int size, float seconds){
 	unsigned int i;
 
 	for(i=0; i<size; i++){
 		print2LEDs(Arr[i]);
-		delay(rate);
+		delaySec(seconds);
 	}
 }
 
-void printLedsOneByOne(int repeatTimes, unsigned int rate){
+void printLedsOneByOne(int repeatTimes, float seconds){
 	static unsigned int bit;
 	int counter;
 
-	for(counter=0; counter<14; bit = (bit+1)%8, counter++){
+	for(counter=0; counter<repeatTimes; bit = (bit+1)%8, counter++){
 		print2LEDs(1 << bit);
-		delay(rate);
+		delaySec(seconds);
 	}
 }
 
-
+void doPWMPortB(unsigned int bitNum, float rate, float dutyCycle){
+	int timeOn  = (int)(dutyCycle*FREQ_TO_TIME(rate));
+	int timeOff = (int)((1-dutyCycle)*FREQ_TO_TIME(rate));
+	while(1){
+		print2PortB(BIT(bitNum));
+		delaySec(timeOn);
+		print2PortB(BIT(bitNum));
+		delaySec(timeOff);
+	}
+}
 
 
 

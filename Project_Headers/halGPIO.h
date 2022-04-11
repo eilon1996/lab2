@@ -14,11 +14,12 @@ extern void clrLEDs(void);
 extern void toggleLEDs(char);
 extern void setLEDs(char);
 extern unsigned char readSWs(void);
-extern void delay(unsigned int);
+extern void delaySec(float);
 extern void enterLPM(unsigned char);
 extern void incLEDs(char);
 extern void enable_interrupts();
 extern void disable_interrupts();
+extern void print2PortB(unsigned char ch);
 
 extern void PORTD_IRQHandler(void);
 

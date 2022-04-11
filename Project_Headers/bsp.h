@@ -2,12 +2,14 @@
 #define _bsp_H_
 
 #include "derivative.h"  // contains the inclusion of <MKL25Z4.h>
-// #include  <msp430g2553.h>          // MSP430x2xx
-// #include  <msp430xG46x.h>          // MSP430x4xx
 
-#define   debounceVal      250
-#define   LEDs_SHOW_RATE   0xFFFFF  // 21_8ms
-#define   HALF_SEC_DELAY   0x1FFFF8  //
+#define   debounceVal      0.25
+#define   SEC_TO_MILLI(x)  (x*1000)
+#define   MILLI_TO_SEC(x)  (x/1000.0f)
+#define   ITERS_PER_SEC    0x240000
+#define   BIT(x)           (1<<x)
+#define   KILO             1000
+#define   FREQ_TO_TIME(x)  (1/(float)x)
 #define   PORT_LOC(x)        ((uint32_t)(1<<x))
 //------------------------------------------------------------------
 //  					LEDs abstraction
