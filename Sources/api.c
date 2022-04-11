@@ -27,7 +27,7 @@ void printLedsOneByOne(int repeatTimes, unsigned int rate){
 	static unsigned int bit;
 	int counter;
 
-	for(counter=0; counter<14; bit = (bit+1)%8){
+	for(counter=0; counter<14; bit = (bit+1)%8, counter++){
 		print2LEDs(1 << bit);
 		delay(rate);
 	}
