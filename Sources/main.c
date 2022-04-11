@@ -33,10 +33,10 @@ void main(void){
 		break;
 
 	  case state3:
-		disable_interrupts();
+		
 		print2LEDs(0x55);
 		delay(LEDs_SHOW_RATE);		// delay of 62.5 [ms]
-		enable_interrupts();
+	
 		break;
 
 	}
