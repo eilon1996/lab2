@@ -1,5 +1,7 @@
 #include  "..\Project_Headers\bsp.h"    // private library - BSP layer
 
+GPIO_MemMapPtr portsArray[] = GPIO_BASE_PTRS;
+
 //-----------------------------------------------------------------------------
 //           GPIO congiguration
 //-----------------------------------------------------------------------------
@@ -18,16 +20,12 @@ void GPIOconfig(void){
 	PORTC_PCR6 = LEDsArrPortSel;  // PTB.10=LED6
 	PORTC_PCR7 = LEDsArrPortSel;  // PTB.11=LED7
 
-	LEDsArrPortDir |= LEDsArr_LOC;  //Setup PB.0-PB.3 and PB.8-PB.11 as GPIO output
+	setLEDsAsOutput();
+	setLEDsOutputData(0);
+	setSWButtonsAsInput();
+	setPortxPinsAsInput(PORT_B, BIT4 | BIT5 | BIT6);
+	setPortxPinsAsOutput(PORT_B, BIT7);
 
-	// Switches SW3-SW0 Setup
-	PORTD_PCR4 = SWsArrPortSel; // PTD.4=SW0
-	PORTD_PCR5 = SWsArrPortSel; // PTD.5=SW1
-	PORTD_PCR6 = SWsArrPortSel; // PTD.6=SW2
-	PORTD_PCR7 = SWsArrPortSel; // PTD.7=SW3
-
-	SWsArrPortDir &= ~ (SW0_LOC|SW1_LOC|SW2_LOC);
-	SWsArrPortDir |= SW3_LOC;
 
 	// PushButtons Setup
 	PORTD_PCR0 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_UP); 	// PTD.0=PB0 + Interrupt request enable
@@ -43,6 +41,35 @@ void GPIOconfig(void){
 	set_irq_priority (INT_PORTD-16,0);  // PORTD Interrupt priority = 0 = max
 
 }
+
+void setSWButtonsAsInput(){
+	GPIOD_PDDR = 0x00;
+}
+
+void setLEDsAsOutput(){
+	GPIOC_PDDR = 0xFF;
+}
+
+void setLEDsOutputData(uint8_t value){
+	GPIOC_PDOR = value;
+}
+
+void setPortxPinsAsInput(PortId portId, uint8_t bitsValue){
+	portsArray[portId]->PDDR &=~ bitsValue;
+}
+
+void setPortxPinsAsOutput(PortId portId, uint8_t bitsValue){
+	portsArray[portId]->PDDR |= bitsValue;
+}
+
+uint8_t getPortxInputValue(PortId portId){
+	return (uint8_t)portsArray[portId]->PDIR;
+}
+
+void setPortxOutputData(PortId portId, uint8_t value){
+	portsArray[portId]->PDOR = value;
+}
+
 //-------------------------------------------------------------------------------------
 //            Timers congiguration
 //-------------------------------------------------------------------------------------

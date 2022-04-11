@@ -98,21 +98,21 @@ void PORTD_IRQHandler(void){
 //---------------------------------------------------------------------
 //            selector of transition between states
 //---------------------------------------------------------------------
-	if(PBsArrIntPend & PB0_LOC){
+	if(PBsArrIntPend & BIT0){
 		 state = state1;
-		 PBsArrIntPendClear(PB0_LOC);
+		 PBsArrIntPendClear(BIT0);
 	}
-    else if (PBsArrIntPend & PB1_LOC){
+    else if (PBsArrIntPend & BIT1){
 		 state = state2;
-		 PBsArrIntPendClear(PB1_LOC);
+		 PBsArrIntPendClear(BIT1);
     }
-    else if (PBsArrIntPend & PB2_LOC){
+    else if (PBsArrIntPend & BIT2){
+		 state = state3;
+		 PBsArrIntPendClear(BIT2);
+    }
+    else if (PBsArrIntPend & BIT3){
 		 state = state0;
-		 PBsArrIntPendClear(PB2_LOC);
-    }
-    else if (PBsArrIntPend & PB3_LOC){
-
-    	PBsArrIntPendClear(PB3_LOC);
+		 PBsArrIntPendClear(BIT3);
     }
 //---------------------------------------------------------------------
 //            Exit from a given LPM

@@ -34,10 +34,12 @@ void printLedsOneByOne(int repeatTimes, float seconds){
 }
 
 void doPWMPortB(unsigned int bitNum, float rate, float dutyCycle){
-	int timeOn  = (int)(dutyCycle*FREQ_TO_TIME(rate));
-	int timeOff = (int)((1-dutyCycle)*FREQ_TO_TIME(rate));
+//	 float timeOn  = dutyCycle*FREQ_TO_TIME(rate);   // give run time error for some reason
+//	 float timeOff = (1-dutyCycle)*FREQ_TO_TIME(rate);
+	float timeOn = 2;
+	float timeOff = 1;
 	while(1){
-		print2PortB(BIT(bitNum));
+		print2PortB(BIT(bitNum));	// doesnt work
 		delaySec(timeOn);
 		print2PortB(BIT(bitNum));
 		delaySec(timeOff);
