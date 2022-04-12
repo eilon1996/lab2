@@ -124,9 +124,10 @@ void PORTD_IRQHandler(void){
 		 PBsArrIntPendClear(BIT2);
     }
     else if (PBsArrIntPend & BIT3){
-		 state = state0;
+		 state = state4;
 		 PBsArrIntPendClear(BIT3);
     }
+    
 //---------------------------------------------------------------------
 //            Exit from a given LPM
 //---------------------------------------------------------------------
