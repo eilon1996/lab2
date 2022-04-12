@@ -4,7 +4,7 @@
 #define ID_LEN 9
 #define PWM_PIN 7
 #define PWM_RATE 4 // *KILO
-#define DUTY_CYCLE 0.75
+
 #define STATE2_REPEATS 14
 
 enum FSMstate state;
@@ -43,7 +43,50 @@ void main(void){
 	  case state3: // interrupt is enabled
 	  	doPWMPortD(PWM_PIN, PWM_RATE, DUTY_CYCLE);
 		break;
+	case state4:
+	{
+	int swVal = readSWs();
+	while(state4){
+		switch(swVal){
+			case(1):
+			{
+				doPWMPortD(PWM_PIN, PWM_RATE, 0);
+				swVal = readSWs();
+				break;
+			}
+			case(2):
+			{
+				doPWMPortD(PWM_PIN, PWM_RATE, 0.25);
+				swVal = readSWs();
+				break;
+			}
+			case(3):
+			{
+				doPWMPortD(PWM_PIN, PWM_RATE, 0.5);
+				swVal = readSWs();
+				break;
+			}
+			case(4):
+			{
+				doPWMPortD(PWM_PIN, PWM_RATE, 1);
+				swVal = readSWs();
+				break;
+			}
 
+			default:
+			{
+				doPWMPortD(PWM_PIN, PWM_RATE, 0);
+				break;
+			}
+
+
+
+
+			}
+
+			}
+
+		}
 	}
   }
 }
