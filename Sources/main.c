@@ -3,7 +3,7 @@
 
 #define ID_LEN 9
 #define PWM_PIN 7
-#define PWM_RATE 4 // *KILO
+#define PWM_RATE 4*1000
 
 #define STATE2_REPEATS 14
 
@@ -41,7 +41,7 @@ void main(void){
 		break;
 
 	  case state3: // interrupt is enabled
-	  	doPWMPortD(PWM_PIN, PWM_RATE, DUTY_CYCLE);
+	  	doPWMPortD(PWM_PIN, PWM_RATE, 0.9, state3);
 		break;
 	case state4:
 	{
@@ -50,32 +50,32 @@ void main(void){
 		switch(swVal){
 			case(1):
 			{
-				doPWMPortD(PWM_PIN, PWM_RATE, 0);
+				doPWMPortD(PWM_PIN, 0.5*PWM_RATE, 0, state4);
 				swVal = readSWs();
 				break;
 			}
 			case(2):
 			{
-				doPWMPortD(PWM_PIN, PWM_RATE, 0.25);
+				doPWMPortD(PWM_PIN, 0.5*PWM_RATE, 0.25, state4);
 				swVal = readSWs();
 				break;
 			}
 			case(3):
 			{
-				doPWMPortD(PWM_PIN, PWM_RATE, 0.5);
+				doPWMPortD(PWM_PIN, 0.5*PWM_RATE, 0.5, state4);
 				swVal = readSWs();
 				break;
 			}
 			case(4):
 			{
-				doPWMPortD(PWM_PIN, PWM_RATE, 1);
+				doPWMPortD(PWM_PIN, 0.5*PWM_RATE, 1, state4);
 				swVal = readSWs();
 				break;
 			}
 
 			default:
 			{
-				doPWMPortD(PWM_PIN, PWM_RATE, 0);
+				doPWMPortD(PWM_PIN, 0.5*PWM_RATE, 0, state4);
 				break;
 			}
 
