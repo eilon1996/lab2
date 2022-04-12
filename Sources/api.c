@@ -46,17 +46,17 @@ void printLedsOneByOne(int repeatTimes, float seconds){
 	}
 }
 
-void doPWMPortD(unsigned int bitNum, float rate, float dutyCycle){
+void doPWMPortD(unsigned int bitNum, float rate, float dutyCycle, enum FSMstate argState){
 	float timeOn  = dutyCycle*FREQ_TO_TIME(rate);   // give run time error for some reason
 	float timeOff = (1-dutyCycle)*FREQ_TO_TIME(rate);
 	//float timeOn = 2;
 	//float timeOff = 1;
-	while(1){
-		setPortxOutputData(PORT_D, BIT(bitNum));	// doesnt work
-		delaySec(timeOn);
-		setPortxOutputData(PORT_D, 0);
-		delaySec(timeOff);
-	}
+	
+	setPortxOutputData(PORT_D, BIT(bitNum));	// doesnt work
+	delaySec(timeOn);
+	setPortxOutputData(PORT_D, 0);
+	delaySec(timeOff);
+
 
 }
 
