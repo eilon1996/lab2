@@ -5,7 +5,7 @@
 
 
 extern void printSWs2LEDs(void);
-extern void printArr2SWs(char Arr[], int size, unsigned int rate);
+extern void printArr2SWs(char Arr[], int size, unsigned int rate, int flag);
 
 
 #endif

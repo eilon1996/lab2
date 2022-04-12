@@ -12,9 +12,16 @@ void sysConfig(void){
 // 				Print Byte to 8-bit LEDs array 
 //--------------------------------------------------------------------
 void print2LEDs(unsigned char ch){
-	GPIOC_PDOR = ch & 0xFF;
+	GPIOB_PDOR = (ch & 0xF) + (ch*16 & 0xF00);
 	// LEDsArrPortWrite(ch);
-}    
+}   
+
+void pwm(unsigned int t, float dutycycle){  // t[msec]
+	GPIOD_PSOR = 0x80;
+	delay(dutycycle*t);
+	GPIOD_PCOR = 0x80;
+	delay((1-dutycycle)*t);
+}
 //--------------------------------------------------------------------
 //				Clear 8-bit LEDs array 
 //--------------------------------------------------------------------
@@ -56,7 +63,7 @@ void incLEDs(char val){
 //---------------------------------------------------------------------
 //            Polling based Delay function
 //---------------------------------------------------------------------
-void delay(unsigned int t){  // t[msec]
+void delay(unsigned int t){  // 0.488*t[usec]
 	volatile unsigned int i;
 	
 	for(i=t; i>0; i--);
@@ -100,11 +107,11 @@ void PORTD_IRQHandler(void){
 		 PBsArrIntPendClear(PB1_LOC);
     }
     else if (PBsArrIntPend & PB2_LOC){	 
-		 state = state0;
+		 state = state3;
 		 PBsArrIntPendClear(PB2_LOC);
     }
     else if (PBsArrIntPend & PB3_LOC){	 
-    		 
+    		 state = state0;
     		 PBsArrIntPendClear(PB3_LOC);
     }
 //---------------------------------------------------------------------
