@@ -35,17 +35,12 @@ void GPIOconfig(void){
 	//PBsArrPortDir &= ~PBsArr_LOC;
 	PBsArrIntPendClear(PBsArr_LOC);
 
+	PORTD_PCR7 = LEDsArrPortSel;
 
 
 	enable_irq(INT_PORTD-16);           // Enable PORTD Interrupts
 	set_irq_priority (INT_PORTD-16,0);  // PORTD Interrupt priority = 0 = max
 
-
-	GPIOD_PDOR = 0;
-	GPIOD_PSOR = 0;
-	GPIOD_PDOR = 0;
-	GPIOD_PCOR = 0;
-	GPIOD_PTOR = 0;
 }
 
 void setSWButtonsAsInput(){
