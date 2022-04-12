@@ -23,16 +23,16 @@ void GPIOconfig(void){
 	setLEDsAsOutput();
 	setLEDsOutputData(0);
 	setSWButtonsAsInput();
-	setPortxPinsAsInput(PORT_B, BIT4 | BIT5 | BIT6);
-	setPortxPinsAsOutput(PORT_B, BIT7);
+	setPortxPinsAsInput(PORT_D, BIT4 | BIT5 | BIT6);
+	setPortxPinsAsOutput(PORT_D, BIT7);
 
 
 	// PushButtons Setup
 	PORTD_PCR0 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_UP); 	// PTD.0=PB0 + Interrupt request enable
 	PORTD_PCR1 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_UP); 	// PTD.1=PB1 + Interrupt request enable
 	PORTD_PCR2 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_DOWN); // PTD.2=PB2 + Interrupt request enable
-	PORTD_PCR3 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_DOWN); // PTD.3=PB3 + Interrupt request enable
-	PBsArrPortDir &= ~PBsArr_LOC;
+	//PORTD_PCR3 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_DOWN); // PTD.3=PB3 + Interrupt request enable
+	//PBsArrPortDir &= ~PBsArr_LOC;
 	PBsArrIntPendClear(PBsArr_LOC);
 
 
@@ -40,6 +40,12 @@ void GPIOconfig(void){
 	enable_irq(INT_PORTD-16);           // Enable PORTD Interrupts
 	set_irq_priority (INT_PORTD-16,0);  // PORTD Interrupt priority = 0 = max
 
+
+	GPIOD_PDOR = 0;
+	GPIOD_PSOR = 0;
+	GPIOD_PDOR = 0;
+	GPIOD_PCOR = 0;
+	GPIOD_PTOR = 0;
 }
 
 void setSWButtonsAsInput(){

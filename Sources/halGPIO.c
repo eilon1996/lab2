@@ -1,4 +1,5 @@
 #include  "..\Project_Headers\halGPIO.h"     // private library - HAL layer
+#include  "..\Project_Headers\bsp.h"     // private library - HAL layer
 
 //--------------------------------------------------------------------
 //             System Configuration
@@ -8,6 +9,7 @@ void sysConfig(void){
 	TIMERconfig();
 	ADCconfig();
 }
+
 //--------------------------------------------------------------------
 // 				Print Byte to port B array
 //--------------------------------------------------------------------

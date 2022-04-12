@@ -23,7 +23,7 @@ void main(void){
   while(1){
 	switch(state){
 	  case state0:
-		printSWs2LEDs();
+		print2LEDs(0x00);
         enterLPM(lpm_mode);
 		break;
 

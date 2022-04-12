@@ -38,10 +38,11 @@ void doPWMPortB(unsigned int bitNum, float rate, float dutyCycle){
 //	 float timeOff = (1-dutyCycle)*FREQ_TO_TIME(rate);
 	float timeOn = 2;
 	float timeOff = 1;
+	GPIOD_PDDR = 0xFF;
 	while(1){
-		print2PortB(BIT(bitNum));	// doesnt work
+		setPortxOutputData(PORT_D, BIT(bitNum));	// doesnt work
 		delaySec(timeOn);
-		print2PortB(BIT(bitNum));
+		setPortxOutputData(PORT_D, 0);
 		delaySec(timeOff);
 	}
 }
