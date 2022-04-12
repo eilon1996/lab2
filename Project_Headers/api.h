@@ -5,7 +5,10 @@
 
 
 extern void printSWs2LEDs(void);
-extern void printArr2SWs(char Arr[], int size, unsigned int rate, int flag);
+//extern void printArr2SWs(char Arr[], int size, unsigned int rate, int flag);
+extern void printArr2SWs(char Arr[], int size, float seconds);
+extern void printLedsOneByOne(int repeatTimes, float seconds);
+extern void doPWMPortD(unsigned int bitNum, float rate, float dutyCycle);
 
 
 #endif

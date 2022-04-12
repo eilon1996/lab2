@@ -1,5 +1,7 @@
 #include  "..\Project_Headers\bsp.h"    // private library - BSP layer
 
+GPIO_MemMapPtr portsArray[] = GPIO_BASE_PTRS;
+
 //-----------------------------------------------------------------------------
 //           GPIO congiguration
 //-----------------------------------------------------------------------------
@@ -20,11 +22,17 @@ void GPIOconfig(void){
 
 	LEDsArrPortDir |= LEDsArr_LOC;  //Setup PB.0-PB.3 and PB.8-PB.11 as GPIO output
 
-
 	GPIOD_PDDR |= 0x80; 			//PTD.7 is output
 	PORTD_PCR7 = LEDsArrPortSel; 	// PTD.7=P2.7
 
-	//SWsArrPortDir &= ~SWsArr_LOC;
+	/*
+	setLEDsAsOutput();
+	setLEDsOutputData(0);
+	setSWButtonsAsInput();
+	setPortxPinsAsInput(PORT_D, BIT4 | BIT5 | BIT6);
+	setPortxPinsAsOutput(PORT_D, BIT7);
+	*/
+
 
 	// PushButtons Setup
 	PORTD_PCR0 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_UP); 	// PTD.0=PB0 + Interrupt request enable
@@ -37,13 +45,44 @@ void GPIOconfig(void){
 	PORTD_PCR5 = SWsArrPortSel; // PTD.5=SW1
 	PORTD_PCR6 = SWsArrPortSel; // PTD.6=SW2
 
-	PBsArrPortDir &= ~PBsArr_LOC;
+	PBsArrPortDir &=~ PBsArr_LOC;
 	PBsArrIntPendClear(PBsArr_LOC);
+
+
 
 	enable_irq(INT_PORTD-16);           // Enable PORTD Interrupts
 	set_irq_priority (INT_PORTD-16,0);  // PORTD Interrupt priority = 0 = max
 
 }
+
+void setSWButtonsAsInput(){
+	GPIOD_PDDR = 0x00;
+}
+
+void setLEDsAsOutput(){
+	GPIOC_PDDR = 0xFF;
+}
+
+void setLEDsOutputData(uint8_t value){
+	GPIOC_PDOR = value;
+}
+
+void setPortxPinsAsInput(PortId portId, uint8_t bitsValue){
+	portsArray[portId]->PDDR &=~ bitsValue;
+}
+
+void setPortxPinsAsOutput(PortId portId, uint8_t bitsValue){
+	portsArray[portId]->PDDR |= bitsValue;
+}
+
+uint8_t getPortxInputValue(PortId portId){
+	return (uint8_t)portsArray[portId]->PDIR;
+}
+
+void setPortxOutputData(PortId portId, uint8_t value){
+	portsArray[portId]->PDOR = value;
+}
+
 //-------------------------------------------------------------------------------------
 //            Timers congiguration
 //-------------------------------------------------------------------------------------

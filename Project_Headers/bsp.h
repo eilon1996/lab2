@@ -2,11 +2,14 @@
 #define _bsp_H_
 
 #include "derivative.h"  // contains the inclusion of <MKL25Z4.h>
-// #include  <msp430g2553.h>          // MSP430x2xx
-// #include  <msp430xG46x.h>          // MSP430x4xx
 
-#define   debounceVal      250
-#define   LEDs_SHOW_RATE   0xFFFFF  // 21_8ms
+#define   debounceVal      0.25
+#define   SEC_TO_MILLI(x)  (x*1000)
+#define   MILLI_TO_SEC(x)  (x/1000.0f)
+#define   ITERS_PER_SEC    0x240000
+#define   BIT(x)           (1<<x)
+#define   KILO             1000
+#define   FREQ_TO_TIME(x)  (1/(float)x)
 #define   PORT_LOC(x)        ((uint32_t)(1<<x))
 //------------------------------------------------------------------
 //  					LEDs abstraction
@@ -34,6 +37,38 @@
 //-----------------------------------------------------------------------
 //                    Switches abstraction
 //-----------------------------------------------------------------------
+
+typedef enum {
+   PORT_A = 0,
+   PORT_B,
+   PORT_C,
+   PORT_D,
+   PORT_E
+
+}PortId;
+
+#define BIT(x) 1 << x
+#define BIT0 BIT(0)
+#define BIT1 BIT(1)
+#define BIT2 BIT(2)
+#define BIT3 BIT(3)
+#define BIT4 BIT(4)
+#define BIT5 BIT(5)
+#define BIT6 BIT(6)
+#define BIT7 BIT(7)
+
+#define SW0_VALUE           (GPIOD_PDIR & BIT0)
+#define SW1_VALUE			(GPIOD_PDIR & BIT1)
+#define SW2_VALUE			(GPIOD_PDIR & BIT2)
+#define SW3_VALUE           (GPIOD_PDIR & BIT3)
+
+#define BUTTON0_VALUE       (GPIOD_PDIR & BIT4)
+#define BUTTON1_VALUE       (GPIOD_PDIR & BIT5)
+#define BUTTON2_VALUE       (GPIOD_PDIR & BIT6)
+#define BUTTON3_VALUE       (GPIOD_PDIR & BIT7)
+
+#define ALL_SW_BUTTON_VALUES {SW0_VALUE, SW1_VALUE, SW2_VALUE, SW3_VALUE, BUTTON0_VALUE, BUTTON1_VALUE, BUTTON2_VALUE, BUTTON3_VALUE}
+
 #define SWsArrPort         GPIOD_PDIR
 #define SWsArrPortDir      GPIOD_PDDR
 #define SWsArrPortSel      PORT_PCR_MUX(1)+ PORT_PCR_IRQC(0x00)
