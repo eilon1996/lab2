@@ -10,6 +10,7 @@ extern enum SYSmode lpm_mode; // global variable
 
 extern void sysConfig(void);
 extern void print2LEDs(unsigned char);
+extern void pwm(unsigned int, float);
 extern void clrLEDs(void);
 extern void toggleLEDs(char);
 extern void setLEDs(char);

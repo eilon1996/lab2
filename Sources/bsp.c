@@ -9,24 +9,26 @@ void GPIOconfig(void){
 	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK | SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK | SIM_SCGC5_PORTE_MASK;
 
 	// LEDs 8-bit Array Port configuration
-	PORTC_PCR0 = LEDsArrPortSel;  // PTB.0=LED0
-	PORTC_PCR1 = LEDsArrPortSel;  // PTB.1=LED1
-	PORTC_PCR2 = LEDsArrPortSel;  // PTB.2=LED2
-	PORTC_PCR3 = LEDsArrPortSel;  // PTB.3=LED3
-	PORTC_PCR4 = LEDsArrPortSel;  // PTB.8=LED4
-	PORTC_PCR5 = LEDsArrPortSel;  // PTB.9=LED5
-	PORTC_PCR6 = LEDsArrPortSel;  // PTB.10=LED6
-	PORTC_PCR7 = LEDsArrPortSel;  // PTB.11=LED7
+	PORTB_PCR0 = LEDsArrPortSel;  // PTB.0=LED0
+	PORTB_PCR1 = LEDsArrPortSel;  // PTB.1=LED1
+	PORTB_PCR2 = LEDsArrPortSel;  // PTB.2=LED2
+	PORTB_PCR3 = LEDsArrPortSel;  // PTB.3=LED3
+	PORTB_PCR8 = LEDsArrPortSel;  // PTB.8=LED4
+	PORTB_PCR9 = LEDsArrPortSel;  // PTB.9=LED5
+	PORTB_PCR10 = LEDsArrPortSel;  // PTB.10=LED6
+	PORTB_PCR11 = LEDsArrPortSel;  // PTB.11=LED7
 	
 	LEDsArrPortDir |= LEDsArr_LOC;  //Setup PB.0-PB.3 and PB.8-PB.11 as GPIO output
 	
 	// Switches SW3-SW0 Setup
-	PORTD_PCR4 = SWsArrPortSel; // PTD.4=SW0
-	PORTD_PCR5 = SWsArrPortSel; // PTD.5=SW1
-	PORTD_PCR6 = SWsArrPortSel; // PTD.6=SW2
-	PORTD_PCR7 = SWsArrPortSel; // PTD.7=SW3
+	//PORTD_PCR4 = SWsArrPortSel; // PTD.4=SW0
+	//PORTD_PCR5 = SWsArrPortSel; // PTD.5=SW1
+	//PORTD_PCR6 = SWsArrPortSel; // PTD.6=SW2
 	
-	SWsArrPortDir &= ~SWsArr_LOC; 
+	GPIOD_PDDR |= 0x80; //PTD.7 is output
+	PORTD_PCR7 = LEDsArrPortSel; // PTD.7=P2.7
+	
+	//SWsArrPortDir &= ~SWsArr_LOC; 
 	
 	// PushButtons Setup
 	PORTD_PCR0 = PBsArrPortSel+PBsArrIntEdgeSel(PULL_UP); 	// PTD.0=PB0 + Interrupt request enable

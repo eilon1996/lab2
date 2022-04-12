@@ -15,26 +15,26 @@
 #define LED1_LOC				PORT_LOC(1)
 #define LED2_LOC				PORT_LOC(2)
 #define LED3_LOC				PORT_LOC(3)
-#define LED4_LOC				PORT_LOC(4)
-#define LED5_LOC				PORT_LOC(5)
-#define LED6_LOC				PORT_LOC(6)
-#define LED7_LOC				PORT_LOC(7)
+#define LED4_LOC				PORT_LOC(8)
+#define LED5_LOC				PORT_LOC(9)
+#define LED6_LOC				PORT_LOC(10)
+#define LED7_LOC				PORT_LOC(11)
 #define LEDsArr_LOC             LED0_LOC|LED1_LOC|LED2_LOC|LED3_LOC|LED4_LOC|LED5_LOC|LED6_LOC|LED7_LOC
 
  // there is need to mask the LEDs array location in 32-bit PORT space
-#define LEDsArrPort             GPIOC_PDOR
-#define LEDsArrPortSet(x)		GPIOC_PSOR = x & LEDsArr_LOC
-#define LEDsArrPortClear(x)	    GPIOC_PCOR = x & LEDsArr_LOC
-#define LEDsArrPortToggle(x)	GPIOC_PTOR = x & LEDsArr_LOC
+#define LEDsArrPort             GPIOB_PDOR
+#define LEDsArrPortSet(x)		GPIOB_PSOR = x & LEDsArr_LOC
+#define LEDsArrPortClear(x)	    GPIOB_PCOR = x & LEDsArr_LOC
+#define LEDsArrPortToggle(x)	GPIOB_PTOR = x & LEDsArr_LOC
 #define LEDsArrPortWrite(x)	    LEDsArrPort = x & LEDsArr_LOC 
 // #define LEDsArrPortWrite(x)	    GPIOC_PDOR = LEDsArrPortSet(x),GPIOC_PDOR = LEDsArrPortSet(~x)
 
-#define LEDsArrPortDir     		GPIOC_PDDR
+#define LEDsArrPortDir     		GPIOB_PDDR
 #define LEDsArrPortSel     		PORT_PCR_MUX(1) | PORT_PCR_DSE_MASK | PORT_PCR_SRE_MASK
 //-----------------------------------------------------------------------
 //                    Switches abstraction
 //-----------------------------------------------------------------------
-#define SWsArrPort         GPIOD_PDIR
+/*#define SWsArrPort         GPIOD_PDIR
 #define SWsArrPortDir      GPIOD_PDDR
 #define SWsArrPortSel      PORT_PCR_MUX(1)+ PORT_PCR_IRQC(0x00)
 
@@ -44,7 +44,7 @@
 #define SW3_LOC			PORT_LOC(7)
 #define SWsArr_LOC      SW0_LOC|SW1_LOC|SW2_LOC|SW3_LOC
 #define SWsArrReadShift 4
-#define SWsArrVal       (SWsArrPort >> SWsArrReadShift) & SWsArr_LOC
+#define SWsArrVal       (SWsArrPort >> SWsArrReadShift) & SWsArr_LOC*/
 
 //------------------------------------------------------------------------
 //					 PushButtons abstraction
